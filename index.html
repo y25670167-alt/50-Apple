@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>和mj一起吃苹果</title>
+<meta name="description" content="少女心粉白 · 上传mj照片 · 50题O3 · 高级排版完整版"/>
+<style>
+/* --- 1. 视觉基调：低饱和 + 楷体 --- */
+:root {
+  --bg1: #fcfaf7;      /* 极浅杏仁白 */
+  --bg2: #fff5f7;      /* 极浅绯红 */
+  --card: #ffffff;     /* 卡片白 */
+  --ink: #594a4e;      /* 优雅褐灰 */
+  --muted: #9e8c92;    /* 辅助灰紫 */
+  --acc: #d47a96;      /* 莫兰迪干枯玫瑰粉 */
+  --acc-light: #fbeef3;/* 浅粉衬底 */
+  --line: #f0e4e8;     /* 柔和分割线 */
+  --shadow: 0 8px 24px -6px rgba(212, 122, 150, 0.15);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: "KaiTi", "STKaiti", "楷体", "Songti SC", serif; /* 强制楷体 */
+  background: linear-gradient(160deg, var(--bg1) 0%, var(--bg2) 100%);
+  background-attachment: fixed;
+  font-size: 16px;
+}
+
+/* 氛围背景装饰 */
+body::before {
+  content: ""; position: fixed; top: -10%; right: -10%; width: 600px; height: 600px;
+  background: radial-gradient(circle, #ffeef2 0%, #fff0 70%); z-index: -1; opacity: 0.7;
+}
+
+.wrap { max-width: 800px; margin: auto; padding: 20px 18px; }
+
+/* 头部 */
+header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+.brand { display: flex; gap: 12px; align-items: center; }
+.mjThumb { 
+  width: 50px; height: 50px; border-radius: 50%; 
+  border: 2px solid #fff; object-fit: cover; background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+h1 { margin: 0; font-size: 20px; font-weight: bold; letter-spacing: 1px; color: var(--ink); }
+
+/* 通用卡片 */
+.card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 16px; padding: 24px;
+  box-shadow: var(--shadow); margin-bottom: 20px;
+  position: relative; overflow: hidden;
+}
+
+/* 输入框 */
+label { display: block; font-size: 14px; color: var(--muted); margin-bottom: 8px; font-weight: bold; }
+input[type=text] {
+  width: 100%; padding: 14px; border-radius: 10px;
+  border: 1px solid var(--line); background: #fdfdfd;
+  color: var(--ink); font-family: inherit; font-size: 16px;
+  transition: .2s; outline: none;
+}
+input[type=text]:focus { border-color: var(--acc); background: #fff; }
+
+/* 按钮 */
+.btn {
+  padding: 12px 20px; border-radius: 50px;
+  border: 1px solid var(--line); background: #fff; color: var(--ink);
+  cursor: pointer; transition: all .2s;
+  font-family: inherit; font-size: 15px; letter-spacing: 1px;
+}
+.btn:active { transform: scale(0.97); }
+.btn.primary {
+  background: var(--acc); color: #fff; border-color: var(--acc);
+  box-shadow: 0 4px 15px rgba(212, 122, 150, 0.25);
+}
+.btn.disabled { opacity: 0.5; pointer-events: none; }
+.btn.ghost { background: transparent; border: none; color: var(--muted); padding: 6px 12px; }
+
+/* 题目区 */
+.progress { height: 4px; background: var(--acc-light); border-radius: 99px; margin: 12px 0 24px; overflow: hidden; }
+.progress > div { 
+  height: 100%; background: var(--acc); width: 0%; 
+  transition: width 0.3s ease-out; 
+}
+.anim-box { animation: none; }
+.anim-box.in { animation: slideUpFade 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.qPanel { display: flex; gap: 20px; align-items: flex-start; }
+.qLeft { flex: 1; }
+.qRight { width: 90px; flex-shrink: 0; text-align: center; }
+.qRight .mjThumb { width: 80px; height: 80px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+@media (max-width: 600px) {
+  .qPanel { flex-direction: column-reverse; gap: 16px; }
+  .qRight { width: 100%; display: flex; align-items: center; gap: 12px; background: var(--acc-light); padding: 10px 14px; border-radius: 10px; }
+  .qRight .mjThumb { width: 40px; height: 40px; border-radius: 50%; }
+  .q { font-size: 18px; }
+}
+
+.q { font-weight: bold; margin-bottom: 20px; font-size: 20px; line-height: 1.5; color: var(--ink); }
+.opt { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.opt button {
+  text-align: left; background: #fff; padding: 16px 20px;
+  border-radius: 12px; border: 1px solid var(--line);
+  font-family: inherit; font-size: 16px; color: var(--ink);
+  transition: background .2s, border .2s;
+}
+.opt button:active { background: #fafafa; }
+.opt button.sel {
+  border-color: var(--acc); background: var(--acc-light); color: #c46885; font-weight: bold;
+}
+
+/* --- 结果页高级排版 --- */
+.res-header { text-align: center; border-bottom: 1px dashed var(--line); padding-bottom: 16px; margin-bottom: 20px; }
+.res-title { font-size: 24px; font-weight: bold; color: var(--acc); margin-bottom: 8px; }
+.res-meta { font-size: 13px; color: var(--muted); }
+
+/* 能量条图表 */
+.chart-box { margin-bottom: 24px; padding: 16px; background: #fffbf5; border-radius: 10px; border: 1px solid #f2ece0; }
+.chart-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 13px; }
+.chart-row:last-child { margin-bottom: 0; }
+.chart-label { width: 80px; flex-shrink: 0; color: var(--ink); }
+.chart-bar-bg { flex: 1; height: 6px; background: #eee; border-radius: 4px; overflow: hidden; margin: 0 10px; }
+.chart-bar-fill { height: 100%; background: var(--acc); border-radius: 4px; }
+.chart-val { width: 30px; text-align: right; color: var(--muted); font-family: monospace; }
+
+/* 文本块 */
+.block-title { font-size: 14px; color: var(--muted); margin: 20px 0 8px; display: flex; align-items: center; gap: 6px; }
+.block-title::before { content: ""; display: block; width: 4px; height: 14px; background: var(--acc); border-radius: 2px; }
+
+.res-body { font-size: 16px; line-height: 1.8; text-align: justify; color: #5e4b53; }
+
+/* 耳语框 */
+.whisper-box {
+  margin: 16px 0; padding: 16px 20px;
+  background: var(--acc-light); 
+  border-left: 3px solid var(--acc);
+  border-radius: 0 8px 8px 0;
+  color: #9e5e74; font-style: italic; font-size: 15px;
+}
+
+/* 记忆切片 */
+.scene-card {
+  background: #fff; border: 1px solid var(--line);
+  padding: 18px; border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  margin-top: 10px;
+  font-family: "KaiTi";
+}
+
+/* 提示弹窗 */
+.toast-mask {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200;
+  display: none; align-items: center; justify-content: center;
+}
+.toast-box {
+  background: #fff; padding: 24px; border-radius: 16px; width: 80%; max-width: 320px; text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+canvas { display: none; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <img id="mjThumbTop" class="mjThumb" alt="mj"/>
+      <div>
+        <h1 style="font-weight:bold">和mj一起吃苹果</h1>
+        <div class="hint" style="font-size:12px;margin:0">跳转在右上角索引</div>
+      </div>
+    </div>
+    <nav>
+      <button class="btn ghost" id="openIndex">索引</button>
+      <button class="btn ghost" id="resetAll">重置</button>
+    </nav>
+  </header>
+
+  <div class="card" id="setup">
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:16px;">
+      <div>
+        <label>Ta 的称呼</label>
+        <input id="titleInput" type="text" placeholder="例：学长 / 先生"/>
+      </div>
+      <div>
+        <label>Ta 的名字</label>
+        <input id="nameInput" type="text" placeholder="例：阿某"/>
+      </div>
+    </div>
+    <div style="margin-bottom:24px;">
+      <label>上传照片（用于生成海报）</label>
+      <div style="position:relative; margin-top:8px;">
+         <button class="btn" style="width:100%; border-style:dashed; color:var(--muted)">+ 点击选择相册照片</button>
+         <input id="photoInput" type="file" accept="image/*" style="position:absolute; inset:0; opacity:0; cursor:pointer;"/>
+      </div>
+    </div>
+    <button class="btn primary" id="startBtn" style="width:100%; font-size:17px; padding:14px;">开始测试</button>
+  </div>
+
+  <div class="card" id="quizBox" style="display:none">
+    <div style="display:flex; justify-content:space-between; color:var(--muted); font-size:12px;">
+      <span id="qCounter">1 / 50</span>
+      <span>Progress</span>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    
+    <div class="anim-box" id="animBox">
+      <div class="qPanel">
+        <div class="qLeft">
+          <div class="q" id="qText">题目加载中...</div>
+          <div class="opt" id="optBox"></div>
+        </div>
+        <div class="qRight">
+          <img id="mjThumbSide" class="mjThumb" alt="mj"/>
+          <div class="hint" style="font-size:12px; margin-top:4px">Your MJ</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:space-between; margin-top:24px;">
+      <button class="btn" id="prevBtn" style="padding:10px 24px">上一题</button>
+      <button class="btn primary disabled" id="nextBtn" style="padding:10px 24px">下一题</button>
+    </div>
+  </div>
+
+  <div class="card" id="resultBox" style="display:none">
+    <div class="res-header">
+      <div class="res-title" id="resTitle"></div>
+      <div class="res-meta" id="resMeta"></div>
+    </div>
+
+    <div class="chart-box" id="resChart"></div>
+
+    <div class="block-title">核心解读</div>
+    <div class="res-body" id="resBase"></div>
+
+    <div class="whisper-box" id="resWhisper"></div>
+
+    <div class="block-title">混合成分</div>
+    <div class="res-body" id="resBlend"></div>
+
+    <div class="block-title">独家记忆切片</div>
+    <div class="scene-card" id="resScene"></div>
+
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:30px; border-top:1px solid var(--line); padding-top:24px;">
+      <button class="btn primary" id="savePoster" style="flex:1; width:100%">生成海报 (PNG)</button>
+      <div style="width:100%; display:flex; gap:12px">
+        <button class="btn" id="copyText" style="flex:1">复制文字</button>
+        <button class="btn" id="redoBtn" style="flex:1">重做</button>
+      </div>
+    </div>
+    <canvas id="poster" width="900" height="1600"></canvas>
+  </div>
+
+  <div style="text-align:center; font-size:12px; color:var(--muted); margin-top:30px; opacity:0.6;">
+    © 粉粉吃苹果研究所 · O3 臻享版
+  </div>
+</div>
+
+<div class="toast-mask" id="indexMask" style="backdrop-filter: blur(4px);">
+  <div class="toast-box" style="width:90%; max-width:600px; text-align:left;">
+    <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+      <strong>题目索引</strong>
+      <button class="btn ghost" id="closeIndex" style="padding:0">✕</button>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap:8px; max-height:50vh; overflow-y:auto;" id="indexGrid"></div>
+  </div>
+</div>
+
+<div class="toast-mask" id="posterToast">
+  <div class="toast-box">
+    <div style="font-size:24px; margin-bottom:10px;">✅</div>
+    <strong style="font-size:18px;">海报已生成</strong>
+    <p style="margin:12px 0; font-size:14px; color:var(--ink); line-height:1.6;">
+      如果浏览器拦截了自动下载，<br>请长按图片保存，或直接截图。
+    </p>
+    <button class="btn primary" onclick="document.getElementById('posterToast').style.display='none'">好的，我知道了</button>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+/*** 数据与文案配置 ***/
+const TYPES = ["GENTLE","DOM","FERAL","TEASE","STOIC","LOYAL"];
+const TITLES = {
+  GENTLE: "温吞溺爱型", 
+  DOM:    "绝对掌控型", 
+  FERAL:  "原始掠夺型", 
+  TEASE:  "恶劣钓系型", 
+  STOIC:  "隐忍破戒型", 
+  LOYAL:  "偏执独占型"  
+};
+const TAGS = {
+  GENTLE: ["绵密品尝", "掌心托捧", "溺爱式吞咽"],
+  DOM: ["指尖审视", "剥皮拆骨", "绝对掌控"],
+  FERAL: ["汁水四溢", "齿痕那种痛", "掠夺本能"],
+  TEASE: ["研磨果皮", "坏心眼试探", "悬崖边停顿"],
+  STOIC: ["极度克制", "冷静疯感", "精密解构"],
+  LOYAL: ["护食本能", "虔诚烙印", "独占欲"]
+};
+
+// 这里的 DESC 做了数据结构拆分，方便排版
+const DESC_DATA = {
+  GENTLE: {
+    text: "与其说这是一次简单的进食，不如说是一场经过精密计算、旨在让你在高温中缓慢溺亡的温柔陷阱。Ta并不急着将你拆吃入腹，而是将这颗苹果视为世间仅存、稍碰即碎的孤本。指腹沿着果皮的纹理暧昧游走，指尖的温度透过薄薄的果皮传递，像是在确认哪里最甜、哪里最软，又像是在隔着衣料抚摸你因紧张而颤栗的脊背。\n\n那种温吞的、不容拒绝的柔和，像流淌的温热糖浆，一点点封住你的感官。空气里弥漫着一股甜腻到让人发昏的气息，Ta会特意避开那些可能弄疼你的粗暴啃咬，只用唇齿温柔地研磨，甚至在汁水不小心溢出沾湿你的嘴角时，还要停下来，用微凉的指腹替你一点点擦拭干净，动作细致得让你觉得羞耻，仿佛你是一个生活不能自理、只能依附于Ta的瓷娃娃。\n\n这种“过度呵护”像温水煮青蛙般把你的理智一点点蒸发。哪怕你已经难耐地想要催促，甚至因为过久的等待而眼角泛红，Ta也不急着吞咽，而是先用唇舌一点点卷走你嘴角的甜，耐心地等你彻底化开。Ta会一边观察你的表情，一边在你耳边低声询问你的感受，直到确认你已经完全失去了反抗的能力。在这个过程中，你的节奏被完全剥夺，只能在Ta编织的甜蜜缺氧感中，软成一滩水，任由Ta予取予求，连呼吸的频率都必须跟随Ta的引导。",
+    whisper: "乖……怎么抖得这么厉害……嘘，别咬嘴唇，张开……让我尝尝是不是和想象的一样甜……再化开一点……全都给我好不好……"
+  },
+  DOM: {
+    text: "这是一场绝对的上位者审视，也是一次关于“服从与惩罚”的驯化课程。在这个封闭的空间里，Ta就是唯一的法则。Ta根本不急着下口，而是习惯先用冰凉的指尖挑起你的下巴，强迫你抬起头，用那种极具穿透力的目光把你从里到外剥离干净，仿佛你所有的秘密、所有隐秘的渴望在Ta面前都无所遁形。这颗苹果在Ta手里无处可逃，每一次齿关的咬合都是在宣誓主权，那种带着惩罚性质的力度，精准地卡在让你感到危险却又不敢逃离的临界线上。\n\nTa极其享受掌控进食的深浅与频率，甚至会故意停下来，面无表情地欣赏你因为慌乱而急促的呼吸，看着你在Ta的注视下瑟瑟发抖却又不敢移开视线的样子。如果你试图躲避，或者是发出一点点不受控的、Ta没允许的声音，都会换来Ta更强势的镇压——或许是突然收紧的手指，或许是更加深入的掠夺。整个空间里，空气稀薄得让人窒息，耳边只剩下Ta掌控一切的呼吸声，和那种“我不许你逃”的强大压迫感。在这种极端的张力下，你的大脑一片空白，羞耻感被快感取代，你只需要交出思考的能力，做Ta掌心里最听话、最完美的猎物，等待着Ta给予的最后审判。",
+    whisper: "眼睛看着我……躲什么……这里……还有这里……全是我留下的印记……你哪儿也去不了……"
+  },
+  FERAL: {
+    text: "饥饿了几个世纪的野兽终于在这一刻彻底撕开了平日里斯文得体的伪装，露出了最原本、最贪婪、也最令人胆寒的獠牙。平日里那些温文尔雅的假象碎了一地，此时此刻，Ta看着你的眼神不再是在看一个爱人，而是在看唯一的、必须立刻拆吃入腹的猎物。没有任何多余的、温情的缓冲前戏，也没有那些花里胡哨的调情技巧，这里只剩下最原始、最粗暴的掠夺本能。\n\n齿尖切入果肉的声音在封闭的空间里清晰得让人头皮发麻，甚至能听到汁水飞溅的细微声响，那是把你连皮带骨拆吃入腹的急切。Ta的动作粗鲁中夹杂着让肾上腺素瞬间飙升的痛感，比起所谓的“品尝”，Ta更像是在进行一场不死不休的狩猎。每一次触碰都带着要把你揉碎的力度，每一次呼吸都像是下一秒世界末日就要来临，而你是Ta在这个崩坏世界里唯一的救赎和食粮。\n\nTa根本不会顾及你会不会弄脏衣服，也不会在乎姿势是否狼狈，Ta只想把这颗苹果揉碎，把溢出来的所有汁水全部吞咽下去。那种沉重而滚烫的呼吸声狠狠打在你的颈侧，带着几乎能烫伤皮肤的热度，让你产生一种随时会被Ta真的吞吃入腹的错觉。空气里弥漫着危险的铁锈味和Ta身上极具侵略性的气息，这种濒死的危机感混合着极度的刺激，让你大脑一片空白，不得不本能地紧紧攀附着Ta。Ta不仅要占有这颗苹果，还要在上面留下永远无法消退的齿痕和气味，要让那些印记深深刻入你的骨血，让你全身上下都染上Ta的标记。除了Ta怀里，你哪里也去不了。",
+    whisper: "哈……太甜了……怎么吃都不够……想把你揉碎了吞下去……别动……"
+  },
+  TEASE: {
+    text: "恶劣至极的高明猎手，最擅长把人心玩弄于股掌之间。Ta就像一只狡猾的狐狸，最喜欢在理智崩塌的边缘反复横跳。明明已经把你逼到了悬崖边，气氛已经烘托到了顶点，Ta却故意只咬破一点表皮，或者舌尖滑过果肉却迟迟不下口。Ta坏心眼地欣赏你难耐颤抖的样子，享受着你因为落空而泛红的眼尾，和你那想求Ta又说不出口的羞愤表情，仿佛这就是Ta今晚最大的乐趣。\n\nTa会故意曲解你的意思，当你难耐地凑近时，Ta偏偏要退后，眼神里带着似笑非笑的戏谑；当你想要逃离这种折磨时，Ta又一把将你拉回，紧紧扣住你的腰。Ta享受的从来不是吃苹果本身，而是看这颗苹果在Ta手中从青涩变得潮红、理智全线崩盘、甚至带着哭腔主动求饶的全过程。Ta会一点点研磨你的耐心，直到你彻底崩溃。当你以为终于可以结束这漫长的折磨时，Ta才会轻笑着贴近你的耳朵，用最无辜的语气告诉你，真正的“正餐”才刚刚开始。这种被吊在半空中的失重感，会让你在结束后依然长时间地陷在那种酥麻的余韵里，对Ta又爱又恨，分不清这到底是折磨还是享受，只能在Ta的掌心里反复沉沦。",
+    whisper: "嗯？这就受不了了……求我啊……声音再软一点……呵……哭也没用……越哭越让人想欺负你……忍着点……好戏才刚开始呢……"
+  },
+  STOIC: {
+    text: "禁欲者的崩坏往往最致命，那是一种大坝决堤般、带着毁灭性质的坍塌感。平日里Ta外表冷淡得像是在无菌室里做精密实验，仿佛剥离了所有世俗的肮脏欲望，永远衣冠楚楚，连衬衫的领带结都打得一丝不苟，让你觉得Ta高不可攀，甚至不敢在Ta面前大声呼吸。但此刻，如果你敢抬头看一眼，就会发现Ta眼底压抑了许久的暗火，早就把你连同这颗苹果一起烧穿了。\n\n平日里严丝合缝扣到最上面一颗的银色纽扣，此时因为胸膛剧烈的起伏而崩开，露出一小片平时绝对窥探不到的皮肤，这种视觉上的冲击显得格外讽刺且色气。Ta的动作起初看似克制，还在试图维持最后的体面和理智，手指尽量只触碰你的手腕，实则每一次触碰都带着滚烫的侵略性，像是要把压抑了十几年的渴望一次性全部讨回来。指尖的凉意和掌心的热度在你的皮肤上交替，激起一阵阵无法抑制的战栗。\n\n这种“神明坠落”的反差感，是比任何技巧都烈性的催情剂。你会惊恐地发现，那个平日里最持重、最冷静的人，一旦失控起来简直要人命。Ta会一边用最理性的词汇剖析你的生理反应——你的体温升高了多少，你的瞳孔放大了几分——一边用最疯狂、最不容拒绝的动作掠夺你的呼吸，让你在冰与火的夹击中彻底沦陷。Ta的手掌滚烫得惊人，贴在你的后颈上，眼神却依然幽深得像一潭化不开的古井，这种极度的矛盾感让你根本无法招架，只能在Ta的攻势下溃不成军，连声音都破碎不堪，变成了Ta最喜欢的催化剂。",
+    whisper: "别出声……被人听见会很麻烦……可是怎么办……你这里太敏锐了……我一碰你就颤……既然已经乱了……那就彻底陪Ta疯到底吧……"
+  },
+  LOYAL: {
+    text: "这是一种近乎病态的、令人窒息的虔诚与独占。Ta不仅仅是在拥抱你，更像是一张用血肉编织的、密不透风的网，将你层层包裹，恨不得将你揉进Ta的身体里，从此合二为一。全过程Ta都把你死死圈在怀里，双臂的力道重得让你有些发疼，仿佛你不是一个人，而是Ta在这个贫瘠、荒芜的世界上唯一的氧气，稍微松手哪怕一厘米，你就会化作泡沫消失不见。Ta的呼吸沉重而急促，每一声都打在你的耳膜上，带着那种失而复得般的颤抖。\n\nTa的眼神一刻也不曾离开过你的脸，那目光深沉得像是一潭化不开的墨，带着一种要把你融入骨血的沉重感。你不敢直视那双眼睛，生怕多看一眼就会被那里面浓烈到甚至有些扭曲的爱意彻底淹没，再也浮不起来。这不仅仅是吃苹果，更像是一场献祭般的共生仪式——你的每一口呼吸、每一声战栗、皮肤上渗出的每一滴汗水，都必须属于Ta。Ta会近乎偏执地反复确认你的存在，用脸颊蹭你的颈窝，用嘴唇触碰你的脉搏，反复在Ta留下的痕迹上叠加新的痕迹，仿佛要把Ta的名字刻在你的灵魂最深处。\n\n无论你试图逃到哪里，都能感觉到Ta如影随形的目光，那种湿漉漉的、甩都甩不掉的爱意，浓烈得让人产生一种美好的窒息感。在这个被Ta强行圈出的狭小世界里，外界的一切喧嚣都被隔绝，只有你们两个人，只有彼此的心跳声。你逃不掉，因为Ta根本不允许你逃，也没想过要逃，只能在Ta编织的深渊里，陪Ta一起沉溺，直到世界尽头，哪怕是一起毁灭也在所不惜。Ta需要的不仅仅是你的身体，而是你完完全全、毫无保留的灵魂交付。",
+    whisper: "终于……全是我的味道了……真好……哪里也不许去……哪里也不许藏……把手给我……抓紧点……你是我的一个人的……"
+  }
+};
+
+const Q = [
+  {q:"更想在哪里一起吃苹果？", a:["书房窗边","厨房台面","车后座","阳台躺椅","酒店落地窗"], map:["STOIC","TEASE","FERAL","GENTLE","DOM"]},
+  {q:"最上头的时间段？", a:["雨夜","午后阳光","凌晨两点","雷阵雨后","拂晓前"], map:["GENTLE","TEASE","DOM","FERAL","STOIC"]},
+  {q:"谁先提“吃苹果”？", a:["你先递苹果","ta叼来就开吃","互相挑衅","ta暗示到你受不了","你装作没懂让ta明说"], map:["GENTLE","DOM","TEASE","FERAL","STOIC"]},
+  {q:"第一口的节奏？", a:["慢慢含咬","一口狠咬","先逗再吃","亲到你腿软才吃","看你呼吸再决定"], map:["GENTLE","FERAL","TEASE","DOM","STOIC"]},
+  {q:"ta看你的眼神更像——", a:["温柔黏人","锋利侵略","笑里藏刀","假正经实则坏","乖犬粘着不走"], map:["LOYAL","DOM","TEASE","STOIC","GENTLE"]},
+  {q:"台词风格更戳你？", a:["安抚低语","简短命令","俏皮调侃","一本正经地坏","不说话只做"], map:["GENTLE","DOM","TEASE","STOIC","FERAL"]},
+  {q:"开动前ta会", a:["确认边界","直接实操","先试探","套近乎骗你点头","做足准备再开始"], map:["STOIC","FERAL","DOM","TEASE","GENTLE"]},
+  {q:"吃完苹果ta会", a:["抱着收尾","再来一回合","若无其事","给你喂水擦口","记下你的偏好"], map:["LOYAL","FERAL","STOIC","GENTLE","DOM"]},
+  {q:"小道具（隐喻）", a:["冰块/蜂蜜","眼罩/缎带","不用道具","领带/手套","薄荷糖"], map:["TEASE","DOM","STOIC","DOM","GENTLE"]},
+  {q:"公开程度", a:["只在私密空间","半公开可能被发现","野外无人","靠窗不拉帘","公共场合忍着不动"], map:["LOYAL","TEASE","FERAL","DOM","STOIC"]},
+  {q:"你被哪种靠近拿捏？", a:["从背后环住","正面压迫","若即若离","掐腰贴耳","牵手带走"], map:["LOYAL","DOM","STOIC","TEASE","GENTLE"]},
+  {q:"前戏长度偏好", a:["拉满流程","适中即可","直接开吃","翻来覆去慢慢来","短促但多回合"], map:["TEASE","GENTLE","FERAL","GENTLE","DOM"]},
+  {q:"ta更在意", a:["你的表情","节奏控制","刺激感","体验安全","结束后的照顾"], map:["GENTLE","DOM","FERAL","STOIC","LOYAL"]},
+  {q:"背景音乐", a:["慢速 R&B","无声更上头","欢快 Pop","暗黑氛围","老歌磁带沙沙声"], map:["GENTLE","STOIC","TEASE","DOM","LOYAL"]},
+  {q:"灯光氛围", a:["暖黄小灯","全暗只留呼吸","日光大胆","霓虹反射","烛光跳动"], map:["GENTLE","DOM","FERAL","TEASE","LOYAL"]},
+  {q:"被打断会", a:["温柔安抚你","冷声让人离开","笑笑换地方","直接锁门","记个仇下次加倍"], map:["LOYAL","DOM","TEASE","FERAL","STOIC"]},
+  {q:"被ta盯着时你", a:["乖乖配合","想反怼回去","故意装无辜","盯回去不退让","躲开又被拉回来"], map:["STOIC","DOM","TEASE","FERAL","LOYAL"]},
+  {q:"适配口味", a:["甜到发腻","甜里带辣","清爽直给","前淡后浓","复杂多层次"], map:["LOYAL","TEASE","FERAL","GENTLE","DOM"]},
+  {q:"节奏曲线", a:["平稳递进","先抑后扬","多段爆点","长线铺垫","短促频密"], map:["GENTLE","STOIC","DOM","TEASE","FERAL"]},
+  {q:"ta最会哪一招", a:["吻技/言语","时机/节奏","臂力/爆发","眼神/掌控","手指/细节"], map:["TEASE","DOM","FERAL","DOM","STOIC"]},
+  {q:"你更想被叫", a:["宝宝","名字/昵称","小坏蛋","小朋友","太太/夫人"], map:["GENTLE","LOYAL","TEASE","STOIC","DOM"]},
+  {q:"ta更常做什么", a:["摸头亲额","捏下巴逼视","指尖逗弄","揉后颈安抚","拉住你手腕"], map:["LOYAL","DOM","TEASE","GENTLE","FERAL"]},
+  {q:"“吃苹果”时的你", a:["想被照顾","想被掌控","想被逗到破防","想一起主导","想躺平放空"], map:["GENTLE","DOM","TEASE","STOIC","LOYAL"]},
+  {q:"节拍偏好", a:["长音慢拍","鼓点切分","自由放飞","心跳同步","重拍突刺"], map:["GENTLE","DOM","FERAL","LOYAL","DOM"]},
+  {q:"ta会不会吃一半停下看你", a:["会，温柔笑","会，冷冷看","不会，继续吃","会，坏笑问要不要再来","会，轻问舒不舒服"], map:["TEASE","STOIC","FERAL","DOM","GENTLE"]},
+  {q:"你更怕哪种失控", a:["太猛太快","太冷太淡","太撩太长","被看穿所有心思","越界到不安全"], map:["FERAL","STOIC","TEASE","DOM","STOIC"]},
+  {q:"ta在你耳边", a:["轻哄夸奖","低声命令","坏笑吐气","沉默贴住呼吸","讲具体规则"], map:["GENTLE","DOM","TEASE","STOIC","DOM"]},
+  {q:"地点备选2", a:["昏暗电梯","酒店落地窗","书店角落","楼顶风大","地铁终点站空车厢"], map:["DOM","FERAL","STOIC","TEASE","FERAL"]},
+  {q:"时间备选2", a:["黎明前","午后雷阵雨","午夜零点","清晨日光","黄昏落日"], map:["STOIC","GENTLE","DOM","GENTLE","LOYAL"]},
+  {q:"谁负责收拾残局", a:["ta","你","一起","ta坚持不让你动","你安排ta照做"], map:["LOYAL","STOIC","GENTLE","GENTLE","DOM"]},
+  {q:"开始的信号", a:["目光对上","ta牵你手","你咬一口","ta叫你名字","你说安全词解锁"], map:["DOM","GENTLE","TEASE","LOYAL","STOIC"]},
+  {q:"速度控制", a:["你说了算","ta说了算","看气氛走","预设节拍表","随机打断再续"], map:["STOIC","DOM","TEASE","DOM","FERAL"]},
+  {q:"ta的笑", a:["宠溺弯眼","危险挑眉","坏到掉渣","似笑非笑","不笑但眼神在说话"], map:["LOYAL","DOM","TEASE","FERAL","STOIC"]},
+  {q:"打闹强度", a:["轻轻闹","适度反抗","直接拉扯","先软后硬","先硬后软"], map:["GENTLE","TEASE","FERAL","DOM","LOYAL"]},
+  {q:"ta手的温度", a:["温热包裹","冷意刺激","忽冷忽热","掌心偏热指尖偏冷","永远刚刚好"], map:["GENTLE","STOIC","DOM","TEASE","LOYAL"]},
+  {q:"你更在意", a:["被珍惜感","被掌控感","被撩拨感","被理解感","被保护感"], map:["LOYAL","DOM","TEASE","STOIC","GENTLE"]},
+  {q:"安全词态度", a:["ta主动提","你提出ta立停","没设过但尊重","一起复盘再升级","默认低风险场景"], map:["STOIC","GENTLE","FERAL","DOM","LOYAL"]},
+  {q:"ta会不会“故意慢一步”", a:["会，吊你胃口","不会，直接上","看你反应","只在关键处慢","先慢后突然快"], map:["TEASE","FERAL","DOM","STOIC","FERAL"]},
+  {q:"亲昵称谓", a:["宝/乖","名字+小姐","坏东西","小朋友","心上人"], map:["GENTLE","STOIC","TEASE","DOM","LOYAL"]},
+  {q:"衣着风格", a:["衬衫解两颗","全黑利落","运动背心","毛衣奶感","西装系领带"], map:["GENTLE","DOM","FERAL","LOYAL","STOIC"]},
+  {q:"表情管理", a:["温柔耐心","冷淡禁欲","痞气坏笑","外冷内热","明目张胆宠溺"], map:["LOYAL","STOIC","TEASE","STOIC","GENTLE"]},
+  {q:"ta先看哪里（情绪读取）", a:["你的眼睛","你的唇","你的手","你的呼吸起伏","你有没有退缩"], map:["DOM","TEASE","GENTLE","LOYAL","STOIC"]},
+  {q:"你想被怎样抱起", a:["公主抱","扛肩/打横","不抱，贴在墙上","抱坐腿上","直接拎走"], map:["GENTLE","FERAL","DOM","LOYAL","TEASE"]},
+  {q:"ta更像哪种天气", a:["春日暖风","台风过境","高压晴空","夜里小电闪","晨雾慢散"], map:["GENTLE","FERAL","STOIC","DOM","LOYAL"]},
+  {q:"间隙里ta会", a:["喂水擦口","捏你脸颊","盯你不说话","把你头发撩到耳后","问你要不要休息"], map:["LOYAL","TEASE","DOM","GENTLE","STOIC"]},
+  {q:"最怕被发现的人", a:["路人","熟人","根本不怕","ta同事","你的舍友"], map:["TEASE","STOIC","FERAL","DOM","LOYAL"]},
+  {q:"节奏结束标志", a:["ta先停下抱你","一起停住笑出来","你先投降","ta亲你额头","你说到此为止"], map:["LOYAL","GENTLE","DOM","GENTLE","STOIC"]},
+  {q:"ta会不会吃到苹果芯", a:["不会，护着你","会，控制得刚好","会，根本停不住","看你决定","留一口最甜的给你"], map:["GENTLE","DOM","FERAL","STOIC","LOYAL"]},
+  {q:"你最想留住的瞬间", a:["温柔注视","强势贴近","撩到心慌","无声拥抱","一起大笑的刹那"], map:["LOYAL","DOM","TEASE","STOIC","GENTLE"]},
+  {q:"复盘时ta会", a:["认真听你说","简单点评改进","坏笑说下次更狠","把细节记录下来","只问一句：还想不想吃"], map:["GENTLE","STOIC","FERAL","DOM","TEASE"]}
+];
+
+
+/*** DB & State ***/
+const DB_NAME="appleO3DB", STORE_NAME="media", PHOTO_KEY="mj_photo";
+let db, mjPhotoURL=null;
+const state={idx:0,answers:new Array(Q.length).fill(null),mj:{title:"",name:"",hasPhoto:false}};
+
+function initDBAndBoot(){
+  const r=indexedDB.open(DB_NAME,1);
+  r.onupgradeneeded=e=>{ if(!e.target.result.objectStoreNames.contains(STORE_NAME)) e.target.result.createObjectStore(STORE_NAME); };
+  r.onsuccess=e=>{ db=e.target.result; boot(); };
+  r.onerror=()=>{ boot(); };
+}
+function savePhotoToDB(blob,cb){
+  if(!db){cb("No DB");return;}
+  try{ db.transaction([STORE_NAME],"readwrite").objectStore(STORE_NAME).put(blob,PHOTO_KEY).onsuccess=()=>cb(null); }catch(e){cb(e);}
+}
+function loadPhotoFromDB(cb){
+  if(!db){cb("No DB");return;}
+  try{ db.transaction([STORE_NAME],"readonly").objectStore(STORE_NAME).get(PHOTO_KEY).onsuccess=e=>cb(null,e.target.result); }catch(e){cb(e);}
+}
+function clearPhotoFromDB(cb){
+  if(!db){cb("No DB");return;}
+  try{ db.transaction([STORE_NAME],"readwrite").objectStore(STORE_NAME).delete(PHOTO_KEY).onsuccess=()=>cb(null); }catch(e){cb(e);}
+}
+function getDefaultSVG(){
+  return "data:image/svg+xml;utf8,"+encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='100%' height='100%' fill='#fffbf5'/><text x='50%' y='55%' font-family='serif' font-size='60' text-anchor='middle' fill='#d47a96'>mj</text></svg>`);
+}
+
+/*** DOM & Logic ***/
+const $ = s=>document.querySelector(s);
+const thumbTop=$("#mjThumbTop"), thumbSide=$("#mjThumbSide");
+
+$("#photoInput").onchange = e => {
+  const f=e.target.files[0]; if(!f)return;
+  savePhotoToDB(f, err=>{
+    if(err) return alert("图片保存失败");
+    if(mjPhotoURL && mjPhotoURL.startsWith("blob:")) URL.revokeObjectURL(mjPhotoURL);
+    mjPhotoURL = URL.createObjectURL(f);
+    thumbTop.src = thumbSide.src = mjPhotoURL;
+    state.mj.hasPhoto=true; saveLocal();
+  });
+};
+
+$("#startBtn").onclick=()=>{
+  state.mj.title=($("#titleInput").value||"TA").trim();
+  state.mj.name=($("#nameInput").value||"阿某").trim();
+  if(!mjPhotoURL){ mjPhotoURL=getDefaultSVG(); thumbTop.src=thumbSide.src=mjPhotoURL; }
+  $("#setup").style.display="none"; $("#quizBox").style.display="block";
+  renderQ(true); saveLocal();
+};
+
+$("#resetAll").onclick=()=>{
+  if(!confirm("确定要清空重来吗？"))return;
+  localStorage.removeItem("apple_o3_state_v3");
+  clearPhotoFromDB(()=>{ location.reload(); });
+};
+
+$("#prevBtn").onclick=()=>goto(state.idx-1);
+$("#nextBtn").onclick=()=>{ 
+  // 仅在最后一题或已选状态下有效，虽然自动跳转了，但保留按钮给反悔用
+  if(state.answers[state.idx]==null)return; 
+  if(state.idx<Q.length-1)goto(state.idx+1); else tryFinish(); 
+};
+$("#finishBtn") && ($("#finishBtn").onclick=tryFinish);
+$("#redoBtn").onclick=()=>{ $("#resultBox").style.display="none"; $("#quizBox").style.display="block"; };
+$("#openIndex").onclick=openIndex; 
+$("#closeIndex").onclick=()=>$("#indexMask").style.display="none";
+$("#copyText").onclick=()=>{
+  const t = $("#resTitle").textContent + "\n" +
+            $("#resMeta").textContent + "\n\n" +
+            $("#resBase").textContent + "\n\n" +
+            "💬 " + $("#resWhisper").textContent + "\n\n" +
+            "🧪 " + $("#resBlend").textContent + "\n\n" +
+            $("#resScene").textContent;
+  navigator.clipboard.writeText(t).then(()=>alert("已复制文案"));
+};
+
+function saveLocal(){ localStorage.setItem("apple_o3_state_v3", JSON.stringify(state)); }
+function loadLocal(){
+  try{
+    const s=JSON.parse(localStorage.getItem("apple_o3_state_v3"));
+    if(s && Array.isArray(s.answers) && s.answers.length===Q.length) Object.assign(state,s);
+  }catch(e){}
+}
+
+function boot(){
+  loadLocal();
+  const afterImg = ()=>{
+    if(state.mj.title) $("#titleInput").value = state.mj.title;
+    if(state.mj.name) $("#nameInput").value = state.mj.name;
+    if(state.answers.some(v=>v!=null)){
+       $("#setup").style.display="none"; $("#quizBox").style.display="block"; renderQ(true);
+    }
+  };
+  if(state.mj.hasPhoto){
+    loadPhotoFromDB((err,blob)=>{
+      mjPhotoURL = (blob) ? URL.createObjectURL(blob) : getDefaultSVG();
+      thumbTop.src = thumbSide.src = mjPhotoURL;
+      afterImg();
+    });
+  } else {
+    mjPhotoURL = getDefaultSVG();
+    thumbTop.src = thumbSide.src = mjPhotoURL;
+    afterImg();
+  }
+}
+
+function goto(i){ 
+  if(i<0||i>=Q.length)return; 
+  state.idx=i; renderQ(); saveLocal(); 
+}
+
+function renderQ(isFirst){
+  const box = $("#animBox");
+  box.classList.remove("in");
+  if(!isFirst) { void box.offsetWidth; box.classList.add("in"); }
+
+  const i=state.idx, item=Q[i];
+  $("#qCounter").textContent = `${i+1} / ${Q.length}`;
+  $("#qText").textContent = item.q;
+  
+  const optBox = $("#optBox"); optBox.innerHTML="";
+  item.a.forEach((txt,k)=>{
+    const b=document.createElement("button");
+    b.className = "btn " + (state.answers[i]===k ? "sel" : "");
+    b.textContent = txt;
+    b.onclick = () => {
+      // 1. 选中视觉反馈
+      state.answers[i] = k;
+      [...optBox.children].forEach((btn,idx) => { btn.className = "btn " + (idx===k?"sel":""); });
+      
+      // 2. 更新进度与存储
+      updateProgress();
+      saveLocal();
+      $("#nextBtn").classList.remove("disabled");
+      $("#nextBtn").textContent = (i===Q.length-1) ? "查看结果" : "下一题";
+
+      // 3. 自动下一题 (300ms 延迟)
+      setTimeout(()=>{
+        if(state.idx < Q.length-1) {
+          goto(state.idx+1);
+        } else {
+           // 最后一题不自动跳结果，防止误触，仅解锁按钮
+           // 也可以选择自动跳： tryFinish();
+        }
+      }, 300);
+    };
+    optBox.appendChild(b);
+  });
+
+  $("#prevBtn").classList.toggle("disabled", i===0);
+  $("#nextBtn").textContent = (i===Q.length-1) ? "完成查看" : "下一题";
+  $("#nextBtn").classList.toggle("disabled", state.answers[i]==null);
+  updateProgress();
+}
+
+function updateProgress(){
+  const done = state.answers.filter(v=>v!=null).length;
+  $("#bar").style.width = (done/Q.length*100).toFixed(1) + "%";
+}
+
+function openIndex(){
+  const grid=$("#indexGrid"); grid.innerHTML="";
+  Q.forEach((_,i)=>{ 
+    const d=document.createElement("button");
+    d.className="btn "+(state.answers[i]!=null?"primary":"");
+    d.style.padding="8px"; d.style.fontSize="12px";
+    d.textContent=i+1;
+    d.onclick=()=>{ state.idx=i; renderQ(); $("#indexMask").style.display="none"; };
+    grid.appendChild(d);
+  });
+  $("#indexMask").style.display="flex";
+}
+
+function tryFinish(){
+  const todos = state.answers.map((v,i)=>v==null?i+1:null).filter(v=>v);
+  if(todos.length){
+    alert(`还有第 ${todos.join(", ")} 题没做完哦！`);
+    return;
+  }
+  compute();
+}
+
+/*** 结果计算（高级版） ***/
+function compute(){
+  const score = {GENTLE:0,DOM:0,FERAL:0,TEASE:0,STOIC:0,LOYAL:0};
+  state.answers.forEach((ans,qi)=>{ score[Q[qi].map[ans]]++; });
+  const sorted = Object.entries(score).sort((a,b)=>b[1]-a[1]);
+  const [topK,topV] = sorted[0];
+  const [secK,secV] = sorted[1];
+  
+  const nameFull = `${(state.mj.title||"TA")} · ${(state.mj.name||"阿某")}`;
+  
+  // 1. 标题与Tag
+  $("#resTitle").textContent = TITLES[topK];
+  const tagsText = TAGS[topK].map(t=>`#${t}`).join("  ");
+  $("#resMeta").textContent = `适配对象：${nameFull}  |  ${tagsText}`;
+
+  // 2. 能量条图表 (补回百分比)
+  $("#resChart").innerHTML = sorted.map(([k,v])=>{
+    const p = Math.round(v/Q.length*100);
+    if(p===0) return ""; // 0%的不显示
+    return `
+      <div class="chart-row">
+        <div class="chart-label">${TITLES[k].replace("型","")}</div>
+        <div class="chart-bar-bg"><div class="chart-bar-fill" style="width:${p}%"></div></div>
+        <div class="chart-val">${p}%</div>
+      </div>
+    `;
+  }).join("");
+
+  // 3. 基础描述与耳语（分行）
+  $("#resBase").textContent = DESC_DATA[topK].text;
+  $("#resWhisper").textContent = DESC_DATA[topK].whisper;
+
+  // 4. 混合加成（分行）
+ const blendMap = {
+  DOM: "混入了绝对支配者的冷硬因子，节奏权在这一刻被Ta强行剥夺。Ta会突然扣住你的手腕，将你死死按在原处，眼神里原本的温情瞬间被不容置疑的掌控取代。你不再需要思考，只需要交出大脑，在这个被Ta构建的安全线边缘，享受那种被彻底压制、连呼吸频率都要看Ta脸色的战栗感。Ta偶尔流露出的强硬命令，比任何安抚都更让你腿软，只能顺从地成为Ta掌心里唯一的玩物。",
+  GENTLE: "像是混入了高浓度致幻剂的蜜糖，所谓的安抚变成了另一种更漫长、更销魂的折磨。Ta会在最激烈的时刻突然放慢节奏，用一种近乎虔诚的姿态细细密密地亲吻你的每一寸皮肤，耐心地安抚你的颤栗。事后那种绵密黏糊、不厌其烦的吻，往往比直白的冲撞更让人头皮发麻。Ta不肯放开你，那种把你当成易碎珍宝捧在手心的温存，会让你在余韵中彻底融化，分不清是梦境还是现实。",
+  FERAL: "潜意识里被压抑的兽性偶尔会撕开文明的伪装破笼而出。那些突然加重的力道、粗暴的掠夺，还有在失控时狠狠咬在你脖颈上的齿痕，都是Ta占有欲的具象化。这一刻Ta不再是那个克制的人，而是一头护食的野兽，用这种近乎疼痛的方式时刻提醒你：你是Ta唯一的猎物，身上染满了Ta的气味，这辈子都别想跑掉，只能乖乖做Ta嘴里的食粮。",
+  TEASE: "恶劣因子在血液里作祟，Ta瞬间化身为高明的魔术师，把你的感官高高悬吊在半空，不上不下。Ta不仅要占有你的身体，还要玩弄你的理智。Ta会故意在临门一脚时停下，坏心眼地欣赏你理智崩坏、眼尾发红、因为求而不得而哭着求Ta给个痛快的破碎表情。这种被吊着胃口的焦躁感和最后释放时的崩溃感，是Ta给予你最坏也最甜的惩罚。",
+  STOIC: "这是“斯文败类”四个字的极致注解。理智与欲念在Ta身上疯狂拉扯，这种矛盾感迷人得要命。上一秒Ta还在用最礼貌疏离的语气确认边界，甚至还衣冠楚楚，下一秒就恨不得把你连皮带骨揉进身体里，动作凶狠得像是在发泄。那种冷淡外表下的暴徒行径，让你在Ta看似平静的注视中，看到了自己彻底沦陷的狼狈模样，这种反差足以烧毁你的理智。",
+  LOYAL: "一种沉重到化不开的深情执念。在混合了这种成分后，Ta的每一个动作都带着一种“生怕失去你”的惶恐。结束后的拥抱会比过程更紧，Ta会把头埋在你的颈窝深吸气，像是在确认你还活着，还没消失。那种湿漉漉的、黏腻的、近乎窒息的占有欲，像深海的水压一样将你层层包裹，让你在Ta的怀抱里产生一种虽然被禁锢、却又无比安全的溺亡感，仿佛世界只剩你们两人。"
+};
+  const pct = k=>Math.round(score[k]/Q.length*100);
+  $("#resBlend").textContent = secV ? `含 ${pct(secK)}% ${TITLES[secK].replace("型","")} 成分：\n${blendMap[secK]}` : "纯度极高，无明显副属性。";
+
+  // 5. 记忆切片
+  const pick = (qi,vals)=> state.answers[qi]!=null ? vals[state.answers[qi]] : null;
+  const sceneBits = [];
+ // 1. 场景切片：从“地点名词”变成“感官特写”
+  // 原理：加入温度、触感、光影对比
+  // Q0 地点：强调身体与环境的接触感
+  sceneBits.push(pick(0, [
+    "书房窗边，晚风吹起窗纱的间隙，被书桌边缘硌到的腰际",
+    "厨房流理台边缘，身后瓷砖的冰凉与身前掌心的滚烫交织",
+    "车后座狭窄的幽闭空间，空气中弥漫着皮革与ta身上的木质香",
+    "阳台躺椅上，月光像水一样流淌在皮肤上，和ta的呼吸同频",
+    "落地窗前，背对着整个城市的万家灯火，眼中却只有ta的倒影"
+  ]));
+
+  // Q1 时间：强调氛围的私密性
+  sceneBits.push(pick(1, [
+    "细雨敲窗的深夜，潮湿的水汽把世界隔绝在外，只剩彼此",
+    "午后三点，阳光把尘埃照得金黄，慵懒到只想在ta怀里虚度光阴",
+    "凌晨2:00的禁区，万籁俱寂，心跳声大得像是要震破耳膜",
+    "雷雨过后的闷热潮湿，皮肤表面起了一层细细的汗，黏腻又亲密",
+    "拂晓前的灰蓝色时刻，半梦半醒间，分不清是现实还是梦境"
+  ]));
+
+  // Q8 道具（隐喻）：强调感官的剥夺或放大
+  sceneBits.push(pick(8, [
+    "冰块划过脊背引起的战栗，与蜂蜜化开时的黏稠甜腻",
+    "缎带遮住视线后，黑暗中被无限放大的听觉与触觉",
+    "没有任何阻隔的十指紧扣，掌纹与掌纹严丝合缝地贴合",
+    "领带带来的轻微窒息感，那一刻在这个世界上你只信赖ta",
+    "薄荷糖在唇齿间交换，清凉的刺痛感让理智瞬间崩塌"
+  ]));
+
+  // Q9 公开度：强调心理上的背德感或安全感
+  sceneBits.push(pick(9, [
+    "只有你们两人的私密孤岛，连呼吸的频率都可以随意失控",
+    "随时可能被门外脚步声打断的半公开角落，压抑到极致的喘息",
+    "野外无人区，风是自由的，你们也是，回归最原始的野性",
+    "靠窗却不拉窗帘的博弈，背后的黑夜是深渊，面前的ta是救赎",
+    "公共场合隐秘的桌下触碰，表面云淡风轻，桌底波涛汹涌"
+  ]));
+
+  // Q36 安全感：强调信任与交付
+  sceneBits.push(pick(36, [
+    "那个只属于你们的安全词，是坠落前最后一道温柔的防线",
+    "你只要眉头一皱ta就立刻停下的默契，比任何情话都动人",
+    "默认低风险的直球，没有任何试探，只有全然的信任与交付",
+    "每次复盘后更进一步的契合，像两个咬合完美的齿轮",
+    "在绝对力量悬殊下的温柔克制，ta是你最危险也最安全的避风港"
+  ]));
+  const finalScenes = sceneBits.filter(Boolean).sort(()=>Math.random()-.5).slice(0,3);
+  $("#resScene").textContent = "“" + finalScenes.join("”；\n\n“") + "”。";
+
+  $("#quizBox").style.display="none";
+  $("#resultBox").style.display="block";
+  saveLocal();
+}
+/*** 海报生成（究极动态版·适配超长文案） ***/
+$("#savePoster").onclick = () => {
+  const c = $("#poster");
+  const ctx = c.getContext("2d");
+  
+  // 1. 准备内容与参数
+  const W = 1000; // 提升宽度让文字更清晰
+  const padX = 80; // 左右边距
+  const contentW = W - padX * 2;
+  const baseLineH = 46; // 基础行高
+  
+  // 获取所有文案
+  const titleText = $("#resTitle").textContent;
+  const tagsText = $("#resMeta").textContent.split("|")[1] || "";
+  const baseText = $("#resBase").textContent;
+  const whisperText = $("#resWhisper").textContent;
+  const blendText = $("#resBlend").textContent;
+  const sceneText = $("#resScene").textContent;
+
+  // 2. 预计算高度 (为了适配你的600字长文，必须先算高度！)
+  // 模拟排版计算 cursorY
+  let cursorY = 320; // 初始顶部留白
+  
+  // 标题 + Tag
+  cursorY += 100; 
+  
+  // 核心解读 (最长的那段)
+  cursorY += measureParagraphsHeight(ctx, baseText, contentW, "34px 'KaiTi'", 54);
+  cursorY += 60; // 间距
+
+  // 耳语 (带框)
+  const whisperH = measureParagraphsHeight(ctx, whisperText, contentW - 60, "italic 32px 'KaiTi'", 50);
+  cursorY += (whisperH + 80); // 加上框的内边距
+  cursorY += 60;
+
+  // 混合成分
+  cursorY += 50; // 标题
+  cursorY += measureParagraphsHeight(ctx, blendText, contentW, "32px 'KaiTi'", 50);
+  cursorY += 60;
+
+  // 记忆切片
+  cursorY += 50; // 标题
+  cursorY += measureParagraphsHeight(ctx, sceneText, contentW, "32px 'KaiTi'", 50);
+  
+  // 底部版权留白
+  cursorY += 150;
+
+  const H = cursorY; // 最终动态高度
+  c.width = W;
+  c.height = H; // 赋值给画布
+
+  // ==========================
+  // 3. 正式开始绘制
+  // ==========================
+  
+  // 背景：极浅渐变
+  const g = ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0, "#fcfaf7"); g.addColorStop(1, "#fff0f5");
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  
+  // 顶部装饰圆弧
+  ctx.fillStyle = "#fff";
+  ctx.beginPath(); ctx.arc(W/2, -600, 800, 0, Math.PI*2); ctx.fill();
+
+  // 顶部 Logo
+  ctx.fillStyle = "#d47a96"; 
+  ctx.font = "bold 60px 'KaiTi','楷体',serif";
+  ctx.textAlign = "center";
+  ctx.fillText("和mj一起吃苹果", W/2, 120);
+  
+  ctx.fillStyle = "#9e8c92";
+  ctx.font = "32px 'KaiTi','楷体',serif";
+  ctx.fillText("Apple O3 Analysis · 深度沉浸版", W/2, 175);
+
+  // 装饰线
+  ctx.strokeStyle = "#e6d5db"; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(padX, 230); ctx.lineTo(W-padX, 230); ctx.stroke();
+
+  // --- 内容绘制游标重置 ---
+  let drawY = 320;
+  ctx.textAlign = "left";
+
+  // A. 结果标题
+  ctx.fillStyle = "#d47a96"; ctx.font = "bold 70px 'KaiTi','楷体',serif";
+  ctx.fillText(titleText, padX, drawY);
+  
+  // B. Tags
+  drawY += 60;
+  ctx.fillStyle = "#9e8c92"; ctx.font = "34px 'KaiTi','楷体',serif";
+  ctx.fillText(tagsText.trim(), padX, drawY);
+
+  // C. 核心长文案 (支持换行符)
+  drawY += 80;
+  ctx.fillStyle = "#5e4b53"; 
+  drawY = drawParagraphs(ctx, baseText, padX, drawY, contentW, "35px 'KaiTi'", 56);
+
+  // D. 耳语框 (重点美化)
+  drawY += 60;
+  const wBoxH = measureParagraphsHeight(ctx, whisperText, contentW - 60, "italic 32px 'KaiTi'", 50) + 60;
+  // 画粉色背景框
+  ctx.fillStyle = "#fff0f5"; 
+  ctx.beginPath();
+  if(ctx.roundRect) ctx.roundRect(padX, drawY, contentW, wBoxH, 20); else ctx.rect(padX, drawY, contentW, wBoxH);
+  ctx.fill();
+  // 左侧装饰条
+  ctx.fillStyle = "#d47a96";
+  ctx.fillRect(padX, drawY + 20, 6, wBoxH - 40);
+  
+  // 耳语文字
+  ctx.fillStyle = "#c46885"; 
+  drawParagraphs(ctx, whisperText, padX + 40, drawY + 45, contentW - 60, "italic 32px 'KaiTi'", 50);
+  drawY += wBoxH;
+
+  // E. 混合成分
+  drawY += 70;
+  ctx.fillStyle = "#9e8c92"; ctx.font = "bold 30px 'KaiTi','楷体',serif";
+  ctx.fillText("🧪 混合成分与加成", padX, drawY);
+  drawY += 20;
+  ctx.fillStyle = "#594a4e";
+  drawY = drawParagraphs(ctx, blendText, padX, drawY + 30, contentW, "32px 'KaiTi'", 52);
+
+  // F. 记忆切片
+  drawY += 70;
+  ctx.fillStyle = "#9e8c92"; ctx.font = "bold 30px 'KaiTi','楷体',serif";
+  ctx.fillText("🎞️ 独家记忆切片", padX, drawY);
+  drawY += 20;
+  ctx.fillStyle = "#7a656d";
+  drawY = drawParagraphs(ctx, sceneText, padX, drawY + 30, contentW, "32px 'KaiTi'", 52);
+
+  // 底部版权
+  ctx.fillStyle = "#bfaeb5"; ctx.textAlign = "center";
+  ctx.font = "26px 'KaiTi','楷体',serif";
+  ctx.fillText("© 粉粉吃苹果研究所", W/2, H - 60);
+
+  // 头像 (画在右上角)
+  if(mjPhotoURL){
+     const img = new Image();
+     img.onload = () => {
+       ctx.save(); ctx.beginPath();
+       const s = 160; const x = W - padX - s + 20; const y = 240;
+       ctx.arc(x + s/2, y + s/2, s/2, 0, Math.PI*2); ctx.clip();
+       ctx.drawImage(img, x, y, s, s); ctx.restore();
+       ctx.strokeStyle="#fff"; ctx.lineWidth=8; 
+       ctx.beginPath(); ctx.arc(x + s/2, y + s/2, s/2, 0, Math.PI*2); ctx.stroke();
+       triggerDownload(c);
+     };
+     img.src = mjPhotoURL;
+  } else { 
+    triggerDownload(c); 
+  }
+};
+
+// 触发下载封装
+function triggerDownload(c){
+    try {
+      const url = c.toDataURL("image/png");
+      const a = document.createElement("a"); a.href=url; a.download="apple_o3_plus.png"; 
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      $("#posterToast").style.display = "flex";
+    } catch(e) { alert("海报生成失败，请截屏。"); }
+}
+
+// === 核心：支持换行符的多段落文字绘制 ===
+function drawParagraphs(ctx, text, x, y, maxWidth, font, lineHeight) {
+  ctx.font = font;
+  const paragraphs = text.split('\n'); // 识别换行符
+  let currentY = y;
+  
+  paragraphs.forEach(para => {
+    if(!para) { currentY += lineHeight/2; return; } // 空行
+    const words = para.split('');
+    let line = '';
+    for(let n = 0; n < words.length; n++) {
+      const testLine = line + words[n];
+      const metrics = ctx.measureText(testLine);
+      const testWidth = metrics.width;
+      if (testWidth > maxWidth && n > 0) {
+        ctx.fillText(line, x, currentY);
+        line = words[n];
+        currentY += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+    ctx.fillText(line, x, currentY);
+    currentY += lineHeight * 1.5; // 段落间距稍大
+  });
+  return currentY; // 返回画完后的Y坐标
+}
+
+// === 核心：预计算高度（不画只算） ===
+function measureParagraphsHeight(ctx, text, maxWidth, font, lineHeight) {
+  ctx.font = font;
+  const paragraphs = text.split('\n');
+  let h = 0;
+  paragraphs.forEach(para => {
+     if(!para) { h += lineHeight/2; return; }
+     const words = para.split('');
+     let line = '';
+     h += lineHeight; // 第一行
+     for(let n = 0; n < words.length; n++) {
+       const testLine = line + words[n];
+       if (ctx.measureText(testLine).width > maxWidth && n > 0) {
+         line = words[n];
+         h += lineHeight; // 新增一行
+       } else {
+         line = testLine;
+       }
+     }
+     h += lineHeight * 0.5; // 段落间距
+  });
+  return h;
+}
+// 启动
+initDBAndBoot();
+
+});
+</script>
+</body>
+</html>
